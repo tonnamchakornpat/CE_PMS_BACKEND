@@ -141,4 +141,6 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+docker-compose.yml
+mongodb_db/
 # End of https://www.toptal.com/developers/gitignore/api/node

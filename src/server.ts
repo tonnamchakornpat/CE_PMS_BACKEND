@@ -1,13 +1,21 @@
 import app from './app'
+import { connectDB } from './configs'
+import logger from './pkg/logger'
 
 // mongoDB and Starting server
 export const startServer = async () => {
   try {
-    app.listen(process.env.PORT, () => {
+    const conn = await connectDB(process.env.MONGO_CONNECT_URI)
+    console.log(`MongoDB database connection `)
+
+    app?.listen(process.env.PORT, () => {
       console.log(`app listening on port ${process.env.PORT}`)
     })
   } catch (error: any) {
-    console.log('Error :', error)
+    console.log('MongoDB connection error.', error)
+    logger.error({
+      message: `MongoDB connection error. Please make sure MongoDB is running: ${error?.message}`,
+    })
   }
 }
 

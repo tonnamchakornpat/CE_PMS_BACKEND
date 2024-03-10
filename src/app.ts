@@ -5,7 +5,7 @@ import cors from 'cors'
 import api from './api'
 
 //? Initialize app with express
-const app = express()
+const app: express.Application | undefined = express()
 
 //? Load App Middleware
 app.use(cors())
