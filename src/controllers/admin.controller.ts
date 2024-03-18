@@ -1,8 +1,23 @@
 import { Request, Response } from 'express'
-import { addUserService, getUserByIdService } from '../services'
+import {
+  adminAddUserService,
+  adminGetUserByIdService,
+  adminGetAllUsersService,
+  adminDeleteUserByIdService,
+  adminUpdateUserByIdService,
+} from '../services'
 
 export const adminAddUserController = (req: Request, res: Response) =>
-  addUserService(req, res)
+  adminAddUserService(req, res)
+
+export const adminGetUsersController = (req: Request, res: Response) =>
+  adminGetAllUsersService(req, res)
 
 export const adminGetUserByIdController = (req: Request, res: Response) =>
-  getUserByIdService(req, res)
+  adminGetUserByIdService(req, res)
+
+export const adminDeleteUserByIdController = (req: Request, res: Response) =>
+  adminDeleteUserByIdService(req, res)
+
+export const adminUpdateUserByIdController = (req: Request, res: Response) =>
+  adminUpdateUserByIdService(req, res)

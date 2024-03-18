@@ -1,17 +1,18 @@
-import express, { Request, Response } from 'express'
+import express from 'express'
 import {
   adminAddUserController,
   adminGetUserByIdController,
+  adminGetUsersController,
+  adminDeleteUserByIdController,
+  adminUpdateUserByIdController,
 } from '../controllers'
 
 const router = express.Router()
 
-router.get('/user', (req: Request, res: Response) => {
-  res.send('Hello world')
-})
-router.get('/user/:id', adminGetUserByIdController)
-router.post('/user', adminAddUserController)
-router.put('/user/:id')
-router.delete('/user:id')
+router.get('/users', adminGetUsersController)
+router.get('/users:id', adminGetUserByIdController)
+router.post('/users', adminAddUserController)
+router.put('/users/:id', adminUpdateUserByIdController)
+router.delete('/users/:id', adminDeleteUserByIdController)
 
 export = router
