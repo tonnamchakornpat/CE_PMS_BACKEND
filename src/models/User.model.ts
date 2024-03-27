@@ -6,6 +6,7 @@ export const UserSchema: Schema<ITeacher> = new Schema(
     username: {
       type: String,
       required: true,
+      unique: true,
     },
     password: { type: String },
     name: { type: String },

@@ -5,11 +5,18 @@ import {
   createUser,
   deleteUserById,
   updateUserById,
-} from '../repositories/userRepository'
+} from '../repositories'
+import bcrypt from 'bcrypt'
 
 export const adminAddUserService = async (req: Request, res: Response) => {
   try {
     const userData = req.body
+    const saltRounds = 10
+
+    if (userData.password == undefined) throw new Error('required password')
+    const passwordHash = await bcrypt.hash(userData.password, saltRounds)
+    userData.password = passwordHash
+
     const user = await createUser(userData)
     res.json(user)
   } catch (error) {

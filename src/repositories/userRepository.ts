@@ -33,7 +33,7 @@ export const deleteUserById = async (id: string) => {
 }
 
 export const updateUserById = async (id: string, updateData: any) => {
-  const update = [{ _id: id }, { ...updateData, updatedAt: new Date(0) }]
+  const update = [{ _id: id }, { ...updateData }]
   const user = await Users.findOneAndUpdate(...update)
   if (!user) throw new Error("can't update user")
   user.updateAt
