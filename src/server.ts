@@ -6,7 +6,7 @@ import logger from './pkg/logger'
 export const startServer = async () => {
   try {
     const conn = await connectDB(process.env.MONGO_CONNECT_URI)
-    console.log(`MongoDB database connection `)
+    console.log(`MongoDB database connection ${conn?.connection?.host}`)
 
     app?.listen(process.env.PORT, () => {
       console.log(`app listening on port ${process.env.PORT}`)

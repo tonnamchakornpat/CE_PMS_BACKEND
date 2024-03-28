@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import { checkUser } from '../repositories'
 
 export const userLoginService = async (req: Request, res: Response) => {
@@ -7,15 +8,26 @@ export const userLoginService = async (req: Request, res: Response) => {
     const { username, password } = req.body
 
     const result: any = await checkUser(username)
-    const match = await bcrypt.compare(password, result.password)
 
-    if (!match) {
-      res.status(400).json({
-        message: 'login failed ( wrong email or password )',
-      })
+    if (result) {
+      const match = await bcrypt.compare(password, result.password)
+      if (match) {
+        const secretKey = process.env.TOKEN_SECRET
+        if (!secretKey) {
+          return res.status(500).json({ error: 'TOKEN_SECRET is not defined' })
+        }
+        const payload = { id: result.id, name: result.name, role: result.role }
+
+        const token = jwt.sign(payload, secretKey, { expiresIn: '4h' })
+        return res.json({
+          message: 'login successful',
+          token,
+        })
+      }
     }
-
-    res.json(result)
+    res.status(400).json({
+      message: 'login failed ( wrong email or password )',
+    })
   } catch (error) {
     console.log('userLogin Error :', error)
 

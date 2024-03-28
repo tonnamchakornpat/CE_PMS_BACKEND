@@ -6,10 +6,11 @@ import {
   adminDeleteUserByIdController,
   adminUpdateUserByIdController,
 } from '../controllers'
+import { isAuth } from '../middlewares/auth'
 
 const router = express.Router()
 
-router.get('/users', adminGetUsersController)
+router.get('/users', isAuth, adminGetUsersController)
 router.get('/users:id', adminGetUserByIdController)
 router.post('/users', adminAddUserController)
 router.put('/users/:id', adminUpdateUserByIdController)
